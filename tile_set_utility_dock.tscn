@@ -1,0 +1,125 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxj2o6bvfqwda"]
+
+[ext_resource type="Script" uid="uid://7o44rslakl0d" path="res://addons/tilesetutilityplugin/TilesetGenerator.cs" id="1_7xd4b"]
+[ext_resource type="Texture2D" uid="uid://r8xchabotcg" path="res://addons/tilesetutilityplugin/BasicTileSheetExample.png" id="1_a7jf8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lleni"]
+bg_color = Color(0.0253638, 0.0253638, 0.0253638, 0.054902)
+
+[node name="TileSetUtilityDock" type="Control"]
+layout_mode = 3
+anchor_right = 0.397
+anchor_bottom = 0.986
+offset_right = -0.344025
+offset_bottom = 0.0719604
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lleni")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TileSetGenerator Header" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]TileSet Generator[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+texture = ExtResource("1_a7jf8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+text = "TileSet Generator will take an image of a very basic TileSheet with the above format and generate a full TileSheet with the 47 required tiles. It will also generate a TileSet with Terrain rules set up so you can drag it onto a TileMapLayer and get to work!"
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Base TileSheet" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BaseTileSheetLabel" type="Label" parent="ScrollContainer/VBoxContainer/Base TileSheet"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Base Tilesheet Path:"
+
+[node name="BaseTileSheetInput" type="LineEdit" parent="ScrollContainer/VBoxContainer/Base TileSheet"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "res://Assets/BasicTileSheet.png"
+
+[node name="TileSet Name" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TileSetNameLabel" type="Label" parent="ScrollContainer/VBoxContainer/TileSet Name"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TileSet Name:"
+
+[node name="TileSetNameInput" type="LineEdit" parent="ScrollContainer/VBoxContainer/TileSet Name"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Generated"
+
+[node name="Output Folder Path" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="OutputFolderPathLabel" type="Label" parent="ScrollContainer/VBoxContainer/Output Folder Path"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Output Folder Path:"
+
+[node name="OutputFolderPathInput" type="LineEdit" parent="ScrollContainer/VBoxContainer/Output Folder Path"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "res://Assets/"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer" node_paths=PackedStringArray("baseTileSheetPathInput", "TileSetNameInput", "OutputFolderPathInput")]
+layout_mode = 2
+text = "Generate TileSet"
+script = ExtResource("1_7xd4b")
+baseTileSheetPathInput = NodePath("../Base TileSheet/BaseTileSheetInput")
+TileSetNameInput = NodePath("../TileSet Name/TileSetNameInput")
+OutputFolderPathInput = NodePath("../Output Folder Path/OutputFolderPathInput")
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="ScrollContainer/VBoxContainer/Button" method="GenerateTileSet"]
