@@ -16,7 +16,23 @@ public partial class TilesetGenerator : Control
 
 	private int tileSize;
 	private int componentSize => tileSize / 2;
+	
 	public void GenerateTileSet()
+	{
+		var fullTilesheet = GenerateFullTileMap();
+		if (fullTilesheet != null)
+		{
+			GenerateTileset(fullTilesheet);
+			EditorInterface.Singleton.GetResourceFilesystem().Scan();
+		}
+	}
+
+	public void GenerateTileMapOnly()
+	{
+		GenerateFullTileMap();
+	}
+
+	public Image GenerateFullTileMap()
 	{
 		string baseTileSheetPath = baseTileSheetPathInput.Text;
 		baseTileSheet = GD.Load<Texture2D>(baseTileSheetPath);
@@ -24,7 +40,7 @@ public partial class TilesetGenerator : Control
 		if (baseTileSheet == null)
 		{
 			Debug.WriteLine($"Base TileSheet Image could not be loaded.");
-			return;
+			return null;
 		}
 
 		Image originalImage = baseTileSheet.GetImage();
@@ -34,7 +50,7 @@ public partial class TilesetGenerator : Control
 		if (!isSquare)
 		{
 			Debug.WriteLine($"Image dimensions are not square");
-			return;
+			return null;
 		}
 		
 		tileSize = imgDimensions.X / 3;
@@ -306,11 +322,7 @@ public partial class TilesetGenerator : Control
 		#endregion
 		
 		var result = fullTilesheet.SavePng(tilesheetOutputPath);
-		if (result == Error.Ok)
-		{
-			GenerateTileset(fullTilesheet);
-			EditorInterface.Singleton.GetResourceFilesystem().Scan();
-		}
+		return fullTilesheet;
 	}
 
 	private void GenerateTileset(Image tilesheet)

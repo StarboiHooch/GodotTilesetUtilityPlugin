@@ -115,4 +115,14 @@ baseTileSheetPathInput = NodePath("../Base TileSheet/BaseTileSheetInput")
 TileSetNameInput = NodePath("../TileSet Name/TileSetNameInput")
 OutputFolderPathInput = NodePath("../Output Folder Path/OutputFolderPathInput")
 
+[node name="Button2" type="Button" parent="ScrollContainer/VBoxContainer" unique_id=1157961804 node_paths=PackedStringArray("baseTileSheetPathInput", "TileSetNameInput", "OutputFolderPathInput")]
+layout_mode = 2
+text = "Generate TileMap ONLY
+(if just updating graphics)"
+script = ExtResource("1_7xd4b")
+baseTileSheetPathInput = NodePath("../Base TileSheet/BaseTileSheetInput")
+TileSetNameInput = NodePath("../TileSet Name/TileSetNameInput")
+OutputFolderPathInput = NodePath("../Output Folder Path/OutputFolderPathInput")
+
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="ScrollContainer/VBoxContainer/Button" method="GenerateTileSet"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button2" to="ScrollContainer/VBoxContainer/Button" method="GenerateTileMapOnly"]
